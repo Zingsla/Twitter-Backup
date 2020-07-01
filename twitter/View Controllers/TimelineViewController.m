@@ -7,8 +7,10 @@
 //
 
 #import "TimelineViewController.h"
+#import "AppDelegate.h"
 #import "APIManager.h"
 #import "ComposeViewController.h"
+#import "LoginViewController.h"
 #import "TweetCell.h"
 #import "UIImageView+AFNetworking.h"
 
@@ -66,6 +68,17 @@
     [self.tweets insertObject:tweet atIndex:0];
     [self.tableView reloadData];
 }
+
+- (IBAction)didTapLogout:(id)sender {
+    NSLog(@"Logging out!");
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    appDelegate.window.rootViewController = loginViewController;
+    
+    [[APIManager shared] logout];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
