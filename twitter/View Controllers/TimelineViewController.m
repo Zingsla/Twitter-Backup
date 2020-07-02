@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "APIManager.h"
 #import "ComposeViewController.h"
+#import "DetailsViewController.h"
 #import "LoginViewController.h"
 #import "TweetCell.h"
 #import "UIImageView+AFNetworking.h"
@@ -89,9 +90,18 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *navigationController = [segue destinationViewController];
-    ComposeViewController *composeController = (ComposeViewController *)navigationController.topViewController;
-    composeController.delegate = self;
+    if ([segue.identifier isEqualToString:@"ComposeViewController"]) {
+        UINavigationController *navigationController = [segue destinationViewController];
+        ComposeViewController *composeController = (ComposeViewController *)navigationController.topViewController;
+        composeController.delegate = self;
+    } else if ([segue.identifier isEqualToString:@"DetailsViewController"]) {
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        Tweet *tweet = self.tweets[indexPath.row];
+        
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.tweet = tweet;
+    }
 }
 
 
