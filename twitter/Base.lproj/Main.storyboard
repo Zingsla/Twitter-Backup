@@ -280,6 +280,9 @@
                                                     <constraint firstAttribute="width" constant="30" id="yzb-RT-OFD"/>
                                                 </constraints>
                                                 <state key="normal" title="Button" image="retweet-icon"/>
+                                                <connections>
+                                                    <action selector="didTapRetweet:" destination="igg-UX-ZJZ" eventType="touchUpInside" id="9Zf-Gx-PIB"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y9W-oZ-1oJ">
                                                 <rect key="frame" x="374" y="193" width="30" height="30"/>
@@ -288,6 +291,10 @@
                                                     <constraint firstAttribute="width" constant="30" id="pMh-MK-H1I"/>
                                                 </constraints>
                                                 <state key="normal" title="Button" image="reply-icon"/>
+                                                <connections>
+                                                    <action selector="didTapReply:" destination="igg-UX-ZJZ" eventType="touchUpInside" id="jLQ-xZ-HyU"/>
+                                                    <segue destination="uYA-Le-Lld" kind="presentation" id="uR1-CI-xWW"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Exn-hr-a1L">
                                                 <rect key="frame" x="10" y="191" width="30" height="30"/>
@@ -296,6 +303,9 @@
                                                     <constraint firstAttribute="width" constant="30" id="xSP-0r-qLY"/>
                                                 </constraints>
                                                 <state key="normal" title="Button" image="favor-icon"/>
+                                                <connections>
+                                                    <action selector="didTapFavorite:" destination="igg-UX-ZJZ" eventType="touchUpInside" id="G4r-29-njY"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAB-LE-1GK">
                                                 <rect key="frame" x="227" y="198" width="16" height="20"/>
@@ -391,7 +401,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="363"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -456,6 +466,9 @@
             <point key="canvasLocation" x="859" y="732"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="uR1-CI-xWW"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="TwitterLogoBlue" width="200" height="200"/>
         <image name="close-icon" width="26" height="24"/>

@@ -7,6 +7,9 @@
 //
 
 #import "DetailsViewController.h"
+#import "APIManager.h"
+#import "ComposeViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface DetailsViewController ()
 
@@ -27,6 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"%@", self.tweet.user.name);
     
     self.nameLabel.text = self.tweet.user.name;
     self.usernameLabel.text = [NSString stringWithFormat:@"@%@", self.tweet.user.screenName];
@@ -57,14 +62,48 @@
     }
 }
 
-/*
+- (IBAction)didTapFavorite:(id)sender {
+    if (!self.tweet.favorited) {
+        [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
+            if (error) {
+                NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
+            } else {
+                NSLog(@"Successfully favorited the following tweet: %@", tweet.text);
+                self.tweet.favorited = YES;
+                self.tweet.favoriteCount += 1;
+                [self refreshData];
+            }
+        }];
+    }
+}
+
+- (IBAction)didTapRetweet:(id)sender {
+    if (!self.tweet.retweeted) {
+           [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
+               if (error) {
+                   NSLog(@"Error retweeting tweet: %@", error.localizedDescription);
+               } else {
+                   NSLog(@"Successfully retweeted the following tweet: %@", tweet.text);
+                   self.tweet.retweeted = YES;
+                   self.tweet.retweetCount += 1;
+                   [self refreshData];
+               }
+           }];
+       }
+}
+
+- (IBAction)didTapReply:(id)sender {
+}
+
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    UINavigationController *navigationController = [segue destinationViewController];
+    ComposeViewController *composeController = (ComposeViewController *)navigationController.topViewController;
+    composeController.replying = YES;
+    composeController.inReplyTo = self.tweet;
 }
-*/
 
 @end

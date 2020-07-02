@@ -21,8 +21,12 @@
     [super viewDidLoad];
     
     [self.tweetTextView setDelegate:self];
-    self.tweetTextView.textColor = [UIColor lightGrayColor];
-    // Do any additional setup after loading the view.
+    
+    if (self.replying) {
+        self.tweetTextView.text = [NSString stringWithFormat:@"@%@", self.inReplyTo.user.screenName];
+    } else {
+        self.tweetTextView.textColor = [UIColor lightGrayColor];
+    }
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
@@ -37,17 +41,31 @@
 }
 
 - (IBAction)tweetButton:(id)sender {
-    [[APIManager shared] postStatusWithText:self.tweetTextView.text completion:^(Tweet *tweet, NSError *error) {
-        if (error) {
-            NSLog(@"Error composing Tweet: %@", error.localizedDescription);
-        }
-        else {
-            NSLog(@"Successfully composed tweet!");
-            [self.delegate didTweet:tweet];
-            [self dismissViewControllerAnimated:YES completion:nil];
-            
-        }
-    }];
+    if (!self.replying) {
+        [[APIManager shared] postStatusWithText:self.tweetTextView.text completion:^(Tweet *tweet, NSError *error) {
+            if (error) {
+                NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+            }
+            else {
+                NSLog(@"Successfully composed tweet!");
+                [self.delegate didTweet:tweet];
+                [self dismissViewControllerAnimated:YES completion:nil];
+                
+            }
+        }];
+    } else {
+        [[APIManager shared] postStatusAsReply:self.tweetTextView.text inReplyTo:self.inReplyTo completion:^(Tweet *tweet, NSError *error) {
+            if (error) {
+                NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+            }
+            else {
+                NSLog(@"Successfully composed tweet!");
+                [self.delegate didTweet:tweet];
+                [self dismissViewControllerAnimated:YES completion:nil];
+                
+            }
+        }];
+    }
 }
 
 /*

@@ -90,11 +90,12 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ComposeViewController"]) {
+    if ([segue.identifier isEqualToString:@"ComposeViewSegue"]) {
         UINavigationController *navigationController = [segue destinationViewController];
         ComposeViewController *composeController = (ComposeViewController *)navigationController.topViewController;
         composeController.delegate = self;
-    } else if ([segue.identifier isEqualToString:@"DetailsViewController"]) {
+        composeController.replying = NO;
+    } else if ([segue.identifier isEqualToString:@"DetailsViewSegue"]) {
         UITableViewCell *tappedCell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
         Tweet *tweet = self.tweets[indexPath.row];
